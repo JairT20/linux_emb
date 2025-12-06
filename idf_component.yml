@@ -1,0 +1,5 @@
+## idf_component.yml
+
+dependencies:
+  # Requiere el componente oficial de cliente MQTT de Espressif
+  espressif/mqtt: "*"

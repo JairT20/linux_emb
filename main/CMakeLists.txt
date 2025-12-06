@@ -1,0 +1,22 @@
+idf_component_register(
+    SRCS
+        "app_main.c"
+        "led_driver.c"
+        "ultrasonic_driver.c"
+        "wifi_driver.c"
+        "mqtt_driver.c"
+        "app_tasks.c"    
+    INCLUDE_DIRS
+        "."
+    REQUIRES
+        esp_wifi
+        esp_event
+        esp_netif      
+        nvs_flash
+        mqtt
+        log
+        freertos
+        esp_driver_gpio
+        esp_adc
+        esp_timer
+)

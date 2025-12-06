@@ -1,0 +1,11 @@
+Command: cmake -G Ninja -B /home/jair/Documents/esp32/noder/nodered/build -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/home/jair/.espressif/python_env/idf6.1_py3.12_env/bin/python -DESP_PLATFORM=1 -DSDKCONFIG='/home/jair/Documents/esp32/noder/nodered/sdkconfig' -DCCACHE_ENABLE=False /home/jair/Documents/esp32/noder/nodered
+CMake Error at /home/jair/esp/esp-idf/tools/cmake/build.cmake:376 (message):
+  Failed to resolve component 'esp_mqtt' required by component 'main':
+  unknown name.
+Call Stack (most recent call first):
+  /home/jair/esp/esp-idf/tools/cmake/build.cmake:419 (__build_resolve_and_add_req)
+  /home/jair/esp/esp-idf/tools/cmake/build.cmake:749 (__build_expand_requirements)
+  /home/jair/esp/esp-idf/tools/cmake/project.cmake:739 (idf_build_process)
+  CMakeLists.txt:8 (project)
+
+
