@@ -9,6 +9,10 @@ Este documento resume **todo el proceso real** que configuramos:
 - Cómo migrarlo a otros PC sin perder nada  
 
 ---
+Para ingresar por ethernet
+   - arp -a
+   - la direccion qeu salga ssh pi4@192.###....
+
 
 # 1. Arquitectura General
 
