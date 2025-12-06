@@ -25,7 +25,7 @@ flowchart TD
 # 2. Configuración del PC (Linux)
 
 <details>
-<summary><strong>📌 2.1 Asignar IP fija al PC (actúa como router)</strong></summary>
+<summary><strong> 2.1 Asignar IP fija al PC (actúa como router)</strong></summary>
 
 ```bash
 nmcli connection add type ethernet ifname <interfaz_usb_eth> \
@@ -52,7 +52,7 @@ inet 192.168.60.1/24
 ---
 
 <details>
-<summary><strong>📌 2.2 Habilitar NAT (para que la Raspberry reciba Internet)</strong></summary>
+<summary><strong> 2.2 Habilitar NAT (para que la Raspberry reciba Internet)</strong></summary>
 
 ```bash
 sudo sysctl -w net.ipv4.ip_forward=1
@@ -71,7 +71,7 @@ Esto convierte tu PC en un **router**.
 ---
 
 <details>
-<summary><strong>📌 2.3 Si cambias de PC → qué repetir</strong></summary>
+<summary><strong> 2.3 Si cambias de PC → qué repetir</strong></summary>
 
 Debes repetir SOLO esto:
 
@@ -86,7 +86,7 @@ El resto **no se toca**.
 ---
 
 <details>
-<summary><strong>📌 2.4 ¿Por qué usamos IP fija?</strong></summary>
+<summary><strong> 2.4 ¿Por qué usamos IP fija?</strong></summary>
 
 Una IP fija garantiza que Raspberry ↔ PC siempre se encuentren.
 
@@ -102,7 +102,7 @@ Una IP fija garantiza que Raspberry ↔ PC siempre se encuentren.
 ---
 
 <details>
-<summary><strong>📌 2.5 ¿Qué es Reverse Tethering?</strong></summary>
+<summary><strong> 2.5 ¿Qué es Reverse Tethering?</strong></summary>
 
 ```text
 PC (WiFi con Internet)
@@ -130,7 +130,7 @@ Ventajas:
 # 3. Configuración de la Raspberry Pi
 
 <details>
-<summary><strong>📌 3.1 IP estática en eth0</strong></summary>
+<summary><strong> 3.1 IP estática en eth0</strong></summary>
 
 ```bash
 sudo nmcli connection modify eth0-static \
@@ -148,7 +148,7 @@ sudo nmcli connection up eth0-static
 ---
 
 <details>
-<summary><strong>📌 3.2 Ruta por defecto</strong></summary>
+<summary><strong> 3.2 Ruta por defecto</strong></summary>
 
 ```bash
 ip r
@@ -171,7 +171,7 @@ sudo ip route replace default via 192.168.60.1 dev eth0
 ---
 
 <details>
-<summary><strong>📌 3.3 Probar Internet</strong></summary>
+<summary><strong> 3.3 Probar Internet</strong></summary>
 
 ```bash
 ping 8.8.8.8
@@ -185,7 +185,7 @@ curl google.com
 # 4. Crear el hotspot con NetworkManager
 
 <details>
-<summary><strong>📌 4.1 Crear el hotspot WiFi</strong></summary>
+<summary><strong> 4.1 Crear el hotspot WiFi</strong></summary>
 
 ```bash
 sudo nmcli connection add type wifi ifname wlan0 \
@@ -206,7 +206,7 @@ sudo nmcli connection up hotspot
 ---
 
 <details>
-<summary><strong>📌 4.2 ¿Qué hace NetworkManager?</strong></summary>
+<summary><strong> 4.2 ¿Qué hace NetworkManager?</strong></summary>
 
 - Asigna `10.42.0.1` a wlan0  
 - Inicia DHCP + DNS automáticamente  
@@ -218,7 +218,7 @@ sudo nmcli connection up hotspot
 ---
 
 <details>
-<summary><strong>📌 4.3 Dispositivos conectados al hotspot</strong></summary>
+<summary><strong> 4.3 Dispositivos conectados al hotspot</strong></summary>
 
 - **SSID:** `RPi-Hotspot`
 - **Clave:** `12345678`
@@ -232,7 +232,7 @@ sudo nmcli connection up hotspot
 # 5. Node-RED en la Raspberry
 
 <details>
-<summary><strong>📌 5.1 Acceso desde PC</strong></summary>
+<summary><strong> 5.1 Acceso desde PC</strong></summary>
 
 ```
 http://192.168.60.10:1880
@@ -243,7 +243,7 @@ http://192.168.60.10:1880
 ---
 
 <details>
-<summary><strong>📌 5.2 Acceso desde hotspot</strong></summary>
+<summary><strong> 5.2 Acceso desde hotspot</strong></summary>
 
 ```
 http://10.42.0.1:1880
@@ -254,7 +254,7 @@ http://10.42.0.1:1880
 ---
 
 <details>
-<summary><strong>📌 5.3 Comandos útiles</strong></summary>
+<summary><strong> 5.3 Comandos útiles</strong></summary>
 
 ```bash
 sudo systemctl status nodered
@@ -270,7 +270,7 @@ node-red-log
 # 6. Node-RED + Mosquitto MQTT
 
 <details>
-<summary><strong>📌 6.1 Instalar Node-RED</strong></summary>
+<summary><strong> 6.1 Instalar Node-RED</strong></summary>
 
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
@@ -283,7 +283,7 @@ sudo systemctl start nodered
 ---
 
 <details>
-<summary><strong>📌 6.2 Instalar Mosquitto</strong></summary>
+<summary><strong> 6.2 Instalar Mosquitto</strong></summary>
 
 ```bash
 sudo apt update
@@ -297,7 +297,7 @@ sudo systemctl start mosquitto
 ---
 
 <details>
-<summary><strong>📌 6.3 Arquitectura MQTT</strong></summary>
+<summary><strong> 6.3 Arquitectura MQTT</strong></summary>
 
 ```
 ESP32 → Mosquitto → Node-RED → Dashboard
@@ -317,7 +317,7 @@ IP del broker:
 # 7. Conexión de ESP32
 
 <details>
-<summary><strong>📌 7.1 ESP32 por Hotspot</strong></summary>
+<summary><strong> 7.1 ESP32 por Hotspot</strong></summary>
 
 ```c
 client.setServer("10.42.0.1", 1883);
@@ -328,7 +328,7 @@ client.setServer("10.42.0.1", 1883);
 ---
 
 <details>
-<summary><strong>📌 7.2 ESP32 conectado al PC</strong></summary>
+<summary><strong> 7.2 ESP32 conectado al PC</strong></summary>
 
 ```c
 client.setServer("192.168.60.10", 1883);
@@ -339,7 +339,7 @@ client.setServer("192.168.60.10", 1883);
 ---
 
 <details>
-<summary><strong>📌 7.3 Varios ESP32 al mismo tiempo</strong></summary>
+<summary><strong> 7.3 Varios ESP32 al mismo tiempo</strong></summary>
 
 Broker común:
 
@@ -359,7 +359,7 @@ Requisitos:
 # 8. Solución de problemas
 
 <details>
-<summary><strong>❌ 8.1 Raspberry sin Internet</strong></summary>
+<summary><strong> 8.1 Raspberry sin Internet</strong></summary>
 
 ```bash
 ip r
@@ -376,7 +376,7 @@ default via 192.168.60.1 dev eth0
 ---
 
 <details>
-<summary><strong>❌ 8.2 Hotspot sin Internet</strong></summary>
+<summary><strong> 8.2 Hotspot sin Internet</strong></summary>
 
 ```bash
 sudo iptables -t nat -L -n -v
@@ -389,7 +389,7 @@ Debe existir MASQUERADE.
 ---
 
 <details>
-<summary><strong>❌ 8.3 ESP32 no conecta</strong></summary>
+<summary><strong> 8.3 ESP32 no conecta</strong></summary>
 
 - Verificar IP  
 - Puerto 1883  
@@ -400,7 +400,7 @@ Debe existir MASQUERADE.
 ---
 
 <details>
-<summary><strong>❌ 8.4 Node-RED no abre</strong></summary>
+<summary><strong> 8.4 Node-RED no abre</strong></summary>
 
 ```bash
 curl http://localhost:1880
