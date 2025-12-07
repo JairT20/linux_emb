@@ -12,6 +12,10 @@ Todo el sistema se basa en **ESP-IDF + FreeRTOS**, con tareas independientes y c
 
 ---
 
+# Conexiones de Hardware 
+- led -GPIO 9 (Este led simula un actuador)
+- Sensor Ultrasónico HC-SR04 — GPIO 7 (TRIG) y GPIO 5 (ECHO)
+
 #  ¿Qué hace el ESP32?
 
 ### 1. Conexión WiFi
@@ -68,8 +72,7 @@ mosquitto_sub -t "esp32/ultra/distancia" -v
 
 ---
 
-# Diagrama de Software (ordenado y legible)
-
+# Diagrama de Software 
 ```mermaid
 flowchart LR
     %% ============================================
@@ -83,8 +86,8 @@ flowchart LR
     %% Columna 1: Drivers
     subgraph DRV["Drivers ESP32-S3"]
         direction TB
-        WIFI_DRV["wifi_driver.c<br/>wifi_init_sta()"]
-        MQTT_DRV["mqtt_driver.c<br/>mqtt_app_start() + event_handler"]
+        WIFI_DRV["wifi_driver.c<br/>wifi_init_sta"]
+        MQTT_DRV["mqtt_driver.c<br/>mqtt_app_start + event_handler"]
         ULTRA_DRV["ultrasonic_driver.c<br/>lectura del sensor"]
         LED_DRV["led_driver.c<br/>control del LED"]
     end
@@ -96,7 +99,7 @@ flowchart LR
         Q_DIST["distance_queue<br/>cola de distancias"]
         T_MQTT["mqtt_avg_publisher_task<br/>promedia 10 s y publica"]
         Q_LED["led_cmd_queue<br/>cola de comandos LED"]
-        T_LED["led_task<br/>maneja LED según comando"]
+        T_LED["led_task<br/>maneja LED segun comando"]
     end
 
     %% Columna 3: Red
@@ -126,11 +129,11 @@ flowchart LR
 
     %% Sensor → Tarea → Cola
     ULTRA_DRV --> T_ULTRA
-    T_ULTRA -->|xQueueSend(distancia)| Q_DIST
+    T_ULTRA -->|xQueueSend_distancia| Q_DIST
     Q_DIST --> T_MQTT
 
     %% Tarea MQTT → broker
-    T_MQTT -->|publish TOPIC_DISTANCIA| MQTT_DRV
+    T_MQTT -->|publish_TOPIC_DISTANCIA| MQTT_DRV
 
     %% WiFi → Broker
     WIFI_DRV --> WIFI_AP
@@ -140,16 +143,17 @@ flowchart LR
     %% LED desde MQTT
     NODE_RED -->|TOPIC_LED_CONTROL| MQTT_BROKER
     MQTT_BROKER -->|MQTT_EVENT_DATA| MQTT_DRV
-    MQTT_DRV -->|cmd LED| Q_LED
+    MQTT_DRV -->|cmd_LED| Q_LED
     Q_LED --> T_LED
     T_LED --> LED_DRV
 
     %% Estado
-    MQTT_DRV -->|publish TOPIC_STATUS = 'online'| MQTT_BROKER
+    MQTT_DRV -->|publish_TOPIC_STATUS_online| MQTT_BROKER
 
     %% Distancia hacia Node-RED
     MQTT_BROKER -->|TOPIC_DISTANCIA| NODE_RED
 ```
+
 
 ---
 
